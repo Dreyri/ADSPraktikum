@@ -12,6 +12,9 @@ private:
     RingNode* mNext;
 
 public:
+    RingNode(const std::string& description, const std::string& data, RingNode* next);
+    ~RingNode();
+
     const int& getAge() const;
     void setAge(const int& age);
 
@@ -20,6 +23,8 @@ public:
 
     const std::string& getData() const;
     void setData(const std::string& data);
+
+    RingNode* getNext();
 };
 
 #endif
