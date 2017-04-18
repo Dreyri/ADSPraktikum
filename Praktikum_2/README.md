@@ -15,7 +15,8 @@ Es gibt keine pflicht zu backups, sondern nur zur Archivierung
 # Nennen sie 3 Punkte, die sie im Rahmen des Backup-Szenarios verbessern wuerden
 
 - Ringpuffer innerhalb Ringpuffer, um aenderungen zu einzelnen Dateien zu tracken
-- keine age benutzen, und den Pointer von Ringpuffer immer auf dem aeltesten object zeigen lassen, falls voll, ueberschreiben und zum naechsten Element zeigen
+- keine age benutzen, statdessen size des buffers behalten und annehmen das der
+  naechste immer der aelteste ist
 - Ringpuffer constructen mit einem int um die laenge des puffers zu bestimmen
 - Template machen fuer besser spezialisierung
 - Moeglicherweise fuer mehrere versionen bei textdateien nur einen diff speichern zur letzen version und den mergen falls der backup entfernt wird

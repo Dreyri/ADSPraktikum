@@ -45,3 +45,8 @@ RingNode* RingNode::getNext()
 {
     return mNext;
 }
+
+void RingNode::setNext(RingNode* next)
+{
+    mNext = next;
+}

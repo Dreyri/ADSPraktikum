@@ -4,6 +4,9 @@
 #include "RingNode.h"
 #include <iostream>
 
+constexpr int MAX_RING_SIZE = 6;
+constexpr int MAX_AGE = MAX_RING_SIZE-1;
+
 class Ringpuffer
 {
 private:

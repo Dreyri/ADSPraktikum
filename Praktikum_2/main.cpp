@@ -59,22 +59,27 @@ void addData(Ringpuffer& puffer)
 int main(void)
 {
     Ringpuffer puffer;
+
     printIntro();
-    printOptions();
-    int option = getInputInt(1, 3);
 
-    switch (option) {
-        case 1:
-            addData(puffer);
-            break;
-        case 2:
+    while(true)
+    {
+        printOptions();
+        int option = getInputInt(1, 3);
 
-            break;
-        case 3:
+        switch (option) {
+            case 1:
+                addData(puffer);
+                break;
+            case 2:
 
-            break;
-        default:
-            return -1;
-            //this shouldn't occur
+                break;
+            case 3:
+                puffer.print();
+                break;
+            default:
+                return -1;
+                //this shouldn't occur
+        }
     }
 }

@@ -1,6 +1,7 @@
 #include "Ringpuffer.h"
 
 Ringpuffer::Ringpuffer()
+    : mAnchor(nullptr)
 {
 
 }
@@ -12,17 +13,48 @@ Ringpuffer::~Ringpuffer()
 
 void Ringpuffer::addNode(const std::string& description, const std::string& data)
 {
-    //increase age of all nodes by 1
+    RingNode* newNode = new RingNode(description, data);
 
-    RingNode* curNode = mAnchor;
-
-    do
+    //if not nullptr then increase all nodes
+    if(mAnchor != nullptr)
     {
-        curNode->setAge(curNode->getAge() + 1);
-        curNode = curNode->getNext();
-    }
-    while(curNode != mAnchor);
+        //increase age of all nodes by 1
 
+        RingNode* curNode = mAnchor;
+
+        do
+        {
+            curNode->setAge(curNode->getAge() + 1);
+            curNode = curNode->getNext();
+        }
+        while(curNode != mAnchor);
+        //now that all have aged see how old the one after the anchor is
+        RingNode* oldest = mAnchor->getNext();
+        if(oldest->getAge() > MAX_AGE)
+        {
+            //you're too old, get out
+            RingNode* oldestNext = oldest->getNext();
+            delete oldest;
+
+            //insert our newnode and set it as the new anchor
+            newNode->setNext(oldestNext);
+            mAnchor->setNext(newNode);
+            mAnchor = newNode;
+        }
+        else //not too old so simply add a node and move anchor
+        {
+            RingNode* nextNode = mAnchor->getNext();
+            mAnchor->setNext(curNode);
+            curNode->setNext(nextNode);
+            mAnchor = curNode;
+        }
+    }
+    else //if nullptr then we don't have any nodes yet, let's add one
+    {
+        //point at yourself I guess
+        newNode->setNext(newNode);
+        mAnchor = newNode;
+    }
 }
 
 void Ringpuffer::print(std::ostream& ostream, RingNode* node) const
