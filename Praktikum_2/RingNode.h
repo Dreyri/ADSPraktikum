@@ -5,13 +5,14 @@
 
 class RingNode
 {
+    friend class Ringpuffer;
 private:
     int mOldAge;
     std::string mDescription;
     std::string mSymbolicData;
     RingNode* mNext;
 
-public:
+private:
     RingNode(const std::string& description, const std::string& data, RingNode* next = nullptr);
     ~RingNode();
 

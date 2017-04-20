@@ -56,16 +56,11 @@ void addData(Ringpuffer& puffer)
     puffer.addNode(description, data);
 }
 
-void printData(const std::string& data)
-{
-    std::cout
-}
-
-void searchData(Ringpuffer& puffer)
+RingNode* searchData(Ringpuffer& puffer)
 {
     std::cout << "+Nach welchen Daten soll gesucht werden?" << std::endl;
     std::string description = getInputStr("");
-    auto data = puffer.searchData(description);
+    return puffer.search(description);
 }
 
 int main(void)
@@ -74,6 +69,7 @@ int main(void)
 
     printIntro();
 
+    /*
     for(int i = 0; i < 7; ++i)
     {
         std::string descr = "node";
@@ -82,7 +78,7 @@ int main(void)
     }
 
     puffer.print();
-
+    */
 
     while(true)
     {
@@ -94,7 +90,7 @@ int main(void)
                 addData(puffer);
                 break;
             case 2:
-
+                puffer.print(std::cout, searchData(puffer));
                 break;
             case 3:
                 puffer.print();

@@ -57,14 +57,14 @@ void Ringpuffer::addNode(const std::string& description, const std::string& data
     }
 }
 
-const std::string* Ringpuffer::searchData(const std::string& descr) const
+RingNode* Ringpuffer::search(const std::string& descr) const
 {
     RingNode* curNode = this->mAnchor;
 
     do
     {
         if(curNode->getDescription().compare(descr) == 0)
-            return &(curNode->getData());
+            return curNode;
         curNode = curNode->getNext();
     }
     while(curNode != mAnchor);
