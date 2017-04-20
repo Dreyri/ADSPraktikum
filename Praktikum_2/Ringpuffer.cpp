@@ -44,9 +44,9 @@ void Ringpuffer::addNode(const std::string& description, const std::string& data
         else //not too old so simply add a node and move anchor
         {
             RingNode* nextNode = mAnchor->getNext();
-            mAnchor->setNext(curNode);
-            curNode->setNext(nextNode);
-            mAnchor = curNode;
+            mAnchor->setNext(newNode);
+            newNode->setNext(nextNode);
+            mAnchor = newNode;
         }
     }
     else //if nullptr then we don't have any nodes yet, let's add one
@@ -56,6 +56,22 @@ void Ringpuffer::addNode(const std::string& description, const std::string& data
         mAnchor = newNode;
     }
 }
+
+const std::string* Ringpuffer::searchData(const std::string& descr) const
+{
+    RingNode* curNode = this->mAnchor;
+
+    do
+    {
+        if(curNode->getDescription().compare(descr) == 0)
+            return &(curNode->getData());
+        curNode = curNode->getNext();
+    }
+    while(curNode != mAnchor);
+
+    return nullptr;
+}
+
 
 void Ringpuffer::print(std::ostream& ostream, RingNode* node) const
 {
