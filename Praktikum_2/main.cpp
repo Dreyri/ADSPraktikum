@@ -41,7 +41,11 @@ std::string getInputStr(const std::string& prefix)
 {
     std::string res;
 
-    std::cout << prefix << " ?> ";
+    if(prefix.length() == 0)
+        ;
+    else
+        std::cout << prefix << " ";
+    std::cout << "?> ";
 
     std::cin >> res;
     return res;
@@ -68,17 +72,6 @@ int main(void)
     Ringpuffer puffer;
 
     printIntro();
-
-    /*
-    for(int i = 0; i < 7; ++i)
-    {
-        std::string descr = "node";
-        descr += i;
-        puffer.addNode(descr, descr);
-    }
-
-    puffer.print();
-    */
 
     while(true)
     {
