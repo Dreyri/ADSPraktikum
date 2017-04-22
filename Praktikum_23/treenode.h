@@ -32,6 +32,7 @@ private:
     void setIncome(double income);
     void setPLZ(int plz);
 
+    void updatePosId();
     void printData() const;
 };
 

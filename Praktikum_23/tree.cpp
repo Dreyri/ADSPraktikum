@@ -9,7 +9,13 @@ Tree::Tree()
 
 Tree::~Tree()
 {
+    auto lambdaDelete = [&](TreeNode* node)
+    {
+        delete node;
+        --mNextId;
+    };
 
+    traverse(lambdaDelete);
 }
 
 void Tree::insertNode(const std::string& name, int age, double income, int plz)
@@ -23,11 +29,62 @@ void Tree::insertNode(const std::string& name, int age, double income, int plz)
 
 bool Tree::deleteNode(int nodePosId)
 {
-    if(mAnchor->getNodePosId() == nodePosId)
-    {
+    bool success = false;
 
-    }
-    return false;
+    auto findMin = [](TreeNode* node) -> TreeNode*
+    {
+        while(node->mLeft != nullptr) node = node->mLeft;
+
+        return node;
+    };
+
+    std::function<TreeNode*(TreeNode*, int)> nodeDelete = [&](TreeNode* node, int nodePosId) -> TreeNode*
+    {
+        if(node == nullptr) return node;
+
+        else if(nodePosId < node->getNodePosId()) node->mLeft = nodeDelete(node->mLeft, nodePosId);
+        else if(nodePosId > node->getNodePosId()) node->mRight = nodeDelete(node->mRight, nodePosId);
+        else //found it
+        {
+            //case, no child
+            if(node->mLeft == nullptr && node->mRight == nullptr)
+            {
+                success = true;
+                delete node;
+                node = nullptr;
+            }
+            else if(node->mLeft == nullptr) //case, 1 child
+            {
+                TreeNode* tmp = node;
+                node = node->mRight;
+                success = true;
+                delete tmp;
+            }
+            else if(node->mRight == nullptr)
+            {
+                TreeNode* tmp = node;
+                node = node->mLeft;
+                success = true;
+                delete tmp;
+            }
+            else
+            {
+                TreeNode* tmp = findMin(node->mRight);
+                //only replace values
+                node->setAge(tmp->getAge());
+                node->setIncome(tmp->getIncome());
+                node->setPLZ(tmp->getPLZ());
+                node->setName(tmp->getName());
+                //we have 2 same value nodes now, delete the one in this subtree
+                node->mRight = nodeDelete(node->mRight, tmp->getNodePosId());
+            }
+        }
+        return node;
+    };
+
+    nodeDelete(mAnchor, nodePosId);
+
+    return success;
 }
 
 std::vector<TreeNode*> Tree::search(const std::string& name)
@@ -52,10 +109,10 @@ void Tree::traverse(std::function<void(TreeNode*)> func)
         if(node == nullptr)
             return;
 
-        func(node);
-
         recurseF(node->mLeft, func);
         recurseF(node->mRight, func);
+
+        func(node);
     };
 
     recurseF(this->mAnchor, func);

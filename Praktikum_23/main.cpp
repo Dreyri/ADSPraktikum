@@ -1,5 +1,7 @@
 #include "tree.h"
 
+#include <fstream>
+
 void printIntro()
 {
     std::cout << "---------------------------" << std::endl;
@@ -107,11 +109,44 @@ void deleteNode(Tree& tree)
     }
 }
 
+void insertCSV(Tree& tree)
+{
+    std::string fileName = "ExportZielAnalyse.csv";
+    std::cout << "+ Import von \"" << fileName + "\"" << std::endl;
+
+    std::ifstream file(fileName);
+    while(file.good())
+    {
+        std::string name;
+        std::string tmp;
+
+        int age;
+        double income;
+        int plz;
+
+        getline(file, name, ',');
+        getline(file, tmp, ',');
+
+        age = std::stoi(tmp);
+
+        getline(file, tmp, ',');
+        income = std::stod(tmp);
+
+        getline(file, tmp, ',');
+        plz = std::stoi(tmp);
+
+        tree.insertNode(name, age, income, plz);
+    }
+}
+
 int main(void)
 {
     Tree tree;
 
     printIntro();
+
+    //insertCSV(tree);
+    //tree.printTree();
 
     while(true)
     {
@@ -123,7 +158,7 @@ int main(void)
                 addData(tree);
                 break;
             case 2:
-                std::cout << "+ noch nicht implementiert" << std::endl;
+                insertCSV(tree);
                 break;
             case 3:
                 deleteNode(tree);

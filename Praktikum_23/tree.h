@@ -28,6 +28,7 @@ public:
 
     /**
      * @brief traverse traverse the tree and execute func on each node
+     * starting bottom left to right and up, which makes it safe for deletion
      */
     void traverse(std::function<void(TreeNode*)> func);
 
