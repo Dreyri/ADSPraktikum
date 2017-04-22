@@ -1,21 +1,28 @@
 #include "tree.h"
+#include "Ringpuffer.h"
 
 #include <fstream>
 
 void printIntro()
 {
-    std::cout << "---------------------------" << std::endl;
-    std::cout << "LambdaTree Solutions inc." << std::endl;
-    std::cout << "---------------------------" << std::endl;
+    std::cout << "--------------------------------" << std::endl;
+    std::cout << "LambdaTree Backup Solutions inc." << std::endl;
+    std::cout << "--------------------------------" << std::endl;
 }
 
 void printOptions()
 {
-    std::cout << "1) Datensatz einfuegen, manuell" << std::endl;
-    std::cout << "2) Datensatz einfuegen, CSV datei" << std::endl;
-    std::cout << "3) Datensatz loeschen" << std::endl;
-    std::cout << "4) Suchen" << std::endl;
-    std::cout << "5) Datenstruktur anzeigen" << std::endl;
+    std::cout << "Backupsteuerung:" << std::endl;
+    std::cout << "1) Backup einfuegen" << std::endl;
+    std::cout << "2) Backup suchen" << std::endl;
+    std::cout << "3) Alle backups ausgeben" << std::endl;
+
+    std::cout << "--------------------------------" << std::endl;
+    std::cout << "Aktueller Baum:" << std::endl;
+    std::cout << "4) Datensatz einfuegen" << std::endl;
+    std::cout << "5) Datensatz loeschen" << std::endl;
+    std::cout << "6) Suchen" << std::endl;
+    std::cout << "7) Datenstruktur anzeigen" << std::endl;
 }
 
 int getInputInt(const std::string& prefix, int min, int max)
@@ -173,37 +180,38 @@ void insertCSV(Tree& tree)
 
 int main(void)
 {
+    Ringpuffer puffer;
     Tree tree;
 
     printIntro();
 
-    insertCSV(tree);
-    tree.printTree();
-
     while(true)
     {
         printOptions();
-        int option = getInputInt("", 1, 5);
+        int option = getInputInt("", 1, 7);
 
         switch (option) {
-            case 1:
-                addData(tree);
-                break;
-            case 2:
-                insertCSV(tree);
-                break;
-            case 3:
-                deleteNode(tree);
-                break;
-            case 4:
-                searchTree(tree);
-                break;
-            case 5:
-                tree.printTree(std::cout);
-                break;
-            default:
-                return -1;
-                //this shouldn't occur
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            addData(tree);
+            break;
+        case 5:
+            deleteNode(tree);
+            break;
+        case 6:
+            searchTree(tree);
+            break;
+        case 7:
+            tree.printTree(std::cout);
+            break;
+        default:
+            return -1;
+            //this shouldn't occur
         }
     }
 }

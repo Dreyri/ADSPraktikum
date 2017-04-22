@@ -31,14 +31,15 @@ void RingNode::setDescription(const std::string& desc)
     mDescription = desc;
 }
 
-const std::string& RingNode::getData() const
+const Tree* RingNode::getData() const
 {
-    return mSymbolicData;
+    return mTreeData;
 }
 
-void RingNode::setData(const std::string& data)
+void RingNode::setData(Tree* tree)
 {
-    mSymbolicData = data;
+    delete mTreeData;
+    mTreeData = tree;
 }
 
 RingNode* RingNode::getNext()
