@@ -109,13 +109,43 @@ void deleteNode(Tree& tree)
     }
 }
 
+std::istream& getlineCSV(std::istream& is, std::string& t)
+{
+    t.clear();
+
+    std::istream::sentry se(is, true);
+    std::streambuf* sb = is.rdbuf();
+
+    for(;;) {
+        int c = sb->sbumpc();
+        switch (c) {
+        case '\n':
+            return is;
+        case '\r':
+            if(sb->sgetc() == '\n')
+                sb->sbumpc();
+            return is;
+        case ',':
+            return is;
+        case ';':
+            return is;
+        case EOF:
+            //if(t.empty())
+            is.setstate(std::ios::eofbit);
+            return is;
+        default:
+            t += (char)c;
+        }
+    }
+}
+
 void insertCSV(Tree& tree)
 {
     std::string fileName = "ExportZielAnalyse.csv";
     std::cout << "+ Import von \"" << fileName + "\"" << std::endl;
 
     std::ifstream file(fileName);
-    while(file.good())
+    while(file.good() && !file.eof())
     {
         std::string name;
         std::string tmp;
@@ -124,19 +154,21 @@ void insertCSV(Tree& tree)
         double income;
         int plz;
 
-        getline(file, name, ',');
-        getline(file, tmp, ',');
+        getlineCSV(file, name);
+        getlineCSV(file, tmp);
 
         age = std::stoi(tmp);
 
-        getline(file, tmp, ',');
+        getlineCSV(file, tmp);
         income = std::stod(tmp);
 
-        getline(file, tmp, ',');
+        getlineCSV(file, tmp);
         plz = std::stoi(tmp);
 
         tree.insertNode(name, age, income, plz);
     }
+
+    file.close();
 }
 
 int main(void)
@@ -145,8 +177,8 @@ int main(void)
 
     printIntro();
 
-    //insertCSV(tree);
-    //tree.printTree();
+    insertCSV(tree);
+    tree.printTree();
 
     while(true)
     {
