@@ -11,7 +11,7 @@ Ringpuffer::~Ringpuffer()
 
 }
 
-void Ringpuffer::addNode(const std::string& description, const std::string& data)
+void Ringpuffer::addNode(const std::string& description, const Tree& data)
 {
     RingNode* newNode = new RingNode(description, data);
 
@@ -76,7 +76,10 @@ RingNode* Ringpuffer::search(const std::string& descr) const
 void Ringpuffer::print(std::ostream& ostream, RingNode* node) const
 {
     if(node != nullptr)
-        ostream << "OldAge: " << node->getAge() << ", Descr: " << node->getDescription() << ", Data: " << node->getData() << std::endl;
+    {
+        ostream << "OldAge: " << node->getAge() << ", Descr: " << node->getDescription() << ", Data: " << std::endl;
+        node->getData().printTree(ostream);
+    }
 
     else
     {

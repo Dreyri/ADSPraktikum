@@ -21,7 +21,7 @@ public:
     Ringpuffer();
     ~Ringpuffer();
 
-    void addNode(const std::string& description, const std::string& data);
+    void addNode(const std::string& description, const Tree& data);
     RingNode* search(const std::string& descr) const;
 
     void print(std::ostream& ostream = std::cout, RingNode* node = nullptr) const;

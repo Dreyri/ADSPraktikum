@@ -17,6 +17,8 @@ public:
     Tree(const Tree& t);
     ~Tree();
 
+    const Tree& operator=(Tree t);
+
     void insertNode(const std::string& name, int age, double income, int plz);
     bool deleteNode(int nodePosId);
     /**
@@ -32,13 +34,16 @@ public:
      * starting bottom left to right and up, which makes it safe for deletion
      */
     void traverse(std::function<void(TreeNode*)> func);
+    void traverse(std::function<void(const TreeNode*)> func) const;
     /**
      * @brief pretraverse executes func before going to subnodes, good for copying trees
      * @param func
      */
     void pretraverse(std::function<void(const TreeNode*)> func) const;
-    void printTree(std::ostream& stream = std::cout);
+    void printTree(std::ostream& stream = std::cout) const;
     static void printNode(TreeNode* node, std::ostream& stream = std::cout);
+
+    friend void swap(Tree& t1, Tree& t2);
 private:
     static TreeNode* insertNode(TreeNode* node, TreeNode* newNode);
 };

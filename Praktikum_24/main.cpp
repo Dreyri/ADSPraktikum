@@ -178,6 +178,21 @@ void insertCSV(Tree& tree)
     file.close();
 }
 
+void backupTree(Ringpuffer& puffer, Tree& tree)
+{
+    std::cout << "+Neuen Datensatz einfuegen" << std::endl;
+    std::string description = getInputStr("Beschreibung");
+    puffer.addNode(description, tree);
+    std::cout << "+ Neuer Datensatz eingefuegt!" << std::endl;
+}
+
+RingNode* searchBackup(Ringpuffer& puffer)
+{
+    std::cout << "+Nach welchen Daten soll gesucht werden?" << std::endl;
+    std::string description = getInputStr("");
+    return puffer.search(description);
+}
+
 int main(void)
 {
     Ringpuffer puffer;
@@ -192,10 +207,13 @@ int main(void)
 
         switch (option) {
         case 1:
+            backupTree(puffer, tree);
             break;
         case 2:
+            puffer.print(std::cout, searchBackup(puffer));
             break;
         case 3:
+            puffer.print(std::cout);
             break;
         case 4:
             addData(tree);

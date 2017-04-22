@@ -19,12 +19,23 @@ Tree::~Tree()
 }
 
 Tree::Tree(const Tree& t)
+    : mNextId(t.mNextId)
 {
     //will traverse the other tree and insert its nodes in our new tree
     t.pretraverse([&](const TreeNode* node)
     {
         this->insertNode(node->getName(), node->getAge(), node->getIncome(), node->getPLZ());
     });
+}
+
+const Tree& Tree::operator=(Tree t)
+{
+    //copy constructor will be called since tree is passed by value
+    //then we swap our copied Tree with this one, copy-and-swap idiom
+    swap(*this, t);
+
+    return *this;
+    //t goes out of scope and destroys itself (our old tree)
 }
 
 void Tree::insertNode(const std::string& name, int age, double income, int plz)
@@ -127,6 +138,24 @@ void Tree::traverse(std::function<void(TreeNode*)> func)
     recurseF(this->mAnchor, func);
 }
 
+void Tree::traverse(std::function<void(const TreeNode*)> func) const
+{
+
+    std::function<void(const TreeNode*, std::function<void(const TreeNode*)>&)> recurseF = [&](const TreeNode* node, std::function<void(const TreeNode*)>& func)
+    {
+        if(node == nullptr)
+            return;
+
+        recurseF(node->mLeft, func);
+        recurseF(node->mRight, func);
+
+        func(node);
+    };
+
+    recurseF(this->mAnchor, func);
+}
+
+
 void Tree::pretraverse(std::function<void(const TreeNode*)> func) const
 {
     std::function<void(TreeNode*, std::function<void(const TreeNode*)>&)> recurseF = [&](TreeNode* node, std::function<void(const TreeNode*)>& func)
@@ -144,12 +173,12 @@ void Tree::pretraverse(std::function<void(const TreeNode*)> func) const
 }
 
 
-void Tree::printTree(std::ostream& stream)
+void Tree::printTree(std::ostream& stream) const
 {
     stream << "ID | Name       | Alter | Einkommen |  PLZ  | Pos" << std::endl;
     stream << "---+------------+-------+-----------+-------+-------" << std::endl;
 
-    auto printFunc = [&](TreeNode* node)
+    auto printFunc = [&](const TreeNode* node)
     {
         auto fillSpaceFunc = [&](size_t spacesAvailable, const std::string& str)
         {
@@ -210,6 +239,12 @@ void Tree::printNode(TreeNode* node, std::ostream& stream)
 {
     stream << "NodeID: " << node->getNodeId() << ", Name: " << node->getName() << ", Alter: " << node->getAge() << ", Einkommen: "
            << node->getIncome() << ", PLZ: " << node->getPLZ() << ", PosID: " << node->getNodePosId() << std::endl;
+}
+
+void swap(Tree& t1, Tree& t2)
+{
+    std::swap(t1.mNextId, t2.mNextId);
+    std::swap(t1.mAnchor, t2.mAnchor);
 }
 
 TreeNode* Tree::insertNode(TreeNode* node, TreeNode* newNode)

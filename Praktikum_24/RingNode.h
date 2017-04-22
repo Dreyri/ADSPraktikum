@@ -10,11 +10,11 @@ class RingNode
 private:
     int mOldAge;
     std::string mDescription;
-    Tree* mTreeData;
+    Tree mTreeData;
     RingNode* mNext;
 
 private:
-    RingNode(const std::string& description, Tree* data, RingNode* next = nullptr);
+    RingNode(const std::string& description, const Tree& data, RingNode* next = nullptr);
     ~RingNode();
 
     int getAge() const;
@@ -23,8 +23,8 @@ private:
     const std::string& getDescription() const;
     void setDescription(const std::string& desc);
 
-    const Tree* getData() const;
-    void setData(Tree* tree);
+    const Tree& getData() const;
+    void setData(const Tree& tree);
 
     RingNode* getNext();
     void setNext(RingNode* next);

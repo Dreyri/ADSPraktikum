@@ -1,7 +1,7 @@
 #include "RingNode.h"
 
-RingNode::RingNode(const std::string& description, const std::string& data, RingNode* next)
-    : mOldAge(0), mDescription(description), mSymbolicData(data), mNext(next)
+RingNode::RingNode(const std::string& description, const Tree& data, RingNode* next)
+    : mOldAge(0), mDescription(description), mTreeData(data), mNext(next)
 {
 
 }
@@ -31,14 +31,13 @@ void RingNode::setDescription(const std::string& desc)
     mDescription = desc;
 }
 
-const Tree* RingNode::getData() const
+const Tree& RingNode::getData() const
 {
     return mTreeData;
 }
 
-void RingNode::setData(Tree* tree)
+void RingNode::setData(const Tree& tree)
 {
-    delete mTreeData;
     mTreeData = tree;
 }
 

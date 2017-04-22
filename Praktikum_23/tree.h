@@ -32,7 +32,7 @@ public:
      */
     void traverse(std::function<void(TreeNode*)> func);
 
-    void printTree(std::ostream& stream = std::cout);
+    void printTree(std::ostream& stream = std::cout) const;
     static void printNode(TreeNode* node, std::ostream& stream = std::cout);
 private:
     static TreeNode* insertNode(TreeNode* node, TreeNode* newNode);

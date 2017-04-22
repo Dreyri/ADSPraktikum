@@ -118,7 +118,7 @@ void Tree::traverse(std::function<void(TreeNode*)> func)
     recurseF(this->mAnchor, func);
 }
 
-void Tree::printTree(std::ostream& stream)
+void Tree::printTree(std::ostream& stream) const
 {
     stream << "ID | Name       | Alter | Einkommen |  PLZ  | Pos" << std::endl;
     stream << "---+------------+-------+-----------+-------+-------" << std::endl;
