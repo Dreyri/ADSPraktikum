@@ -1,7 +1,5 @@
 #include "tree.h"
 
-#include <functional>
-
 Tree::Tree()
     : mAnchor(nullptr), mNextId(0)
 {
