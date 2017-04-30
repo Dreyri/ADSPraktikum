@@ -78,12 +78,23 @@ int main(void)
         printOptions();
         int option = getInputInt(1, 3);
 
+        RingNode* found = nullptr;
+
         switch (option) {
             case 1:
                 addData(puffer);
                 break;
             case 2:
-                puffer.print(std::cout, searchData(puffer));
+                found = searchData(puffer);
+                if(found != nullptr)
+                {
+                    std::cout << "+ Datensatz gefunden" << std::endl;
+                    puffer.print(std::cout, found);
+                }
+                else
+                {
+                    std::cout <<"+ Datensatz konnte nicht gefunden werden!" << std::endl;
+                }
                 break;
             case 3:
                 puffer.print();

@@ -91,11 +91,18 @@ void searchTree(Tree& tree)
 
     auto nodes = tree.search(name);
 
-    std::cout << "+ Fundstellen:" << std::endl;
-
-    for(size_t i = 0; i < nodes.size(); ++i)
+    if(nodes.size() == 0)
     {
-        Tree::printNode(nodes[i]);
+        std::cout << "+ Kein Datensatz gefunden!" << std::endl;
+    }
+    else
+    {
+        std::cout << "+ Fundstellen:" << std::endl;
+
+        for(size_t i = 0; i < nodes.size(); ++i)
+        {
+            Tree::printNode(nodes[i]);
+        }
     }
 }
 
@@ -205,12 +212,22 @@ int main(void)
         printOptions();
         int option = getInputInt("", 1, 7);
 
+        RingNode* found = nullptr;
         switch (option) {
         case 1:
             backupTree(puffer, tree);
             break;
         case 2:
-            puffer.print(std::cout, searchBackup(puffer));
+            found = searchBackup(puffer);
+            if(found == nullptr)
+            {
+                std::cout <<"+ Datensatz konnte nicht gefunden werden!" << std::endl;
+            }
+            else
+            {
+                std::cout << "+ Datensatz gefunden" << std::endl;
+                puffer.print(std::cout, found);
+            }
             break;
         case 3:
             puffer.print(std::cout);

@@ -118,12 +118,29 @@ void Tree::traverse(std::function<void(TreeNode*)> func)
     recurseF(this->mAnchor, func);
 }
 
+void Tree::traverseConst(std::function<void(const TreeNode*)> func) const
+{
+
+    std::function<void(const TreeNode*, std::function<void(const TreeNode*)>&)> recurseF = [&](const TreeNode* node, std::function<void(const TreeNode*)>& func)
+    {
+        if(node == nullptr)
+            return;
+
+        recurseF(node->mLeft, func);
+        recurseF(node->mRight, func);
+
+        func(node);
+    };
+
+    recurseF(this->mAnchor, func);
+}
+
 void Tree::printTree(std::ostream& stream) const
 {
     stream << "ID | Name       | Alter | Einkommen |  PLZ  | Pos" << std::endl;
     stream << "---+------------+-------+-----------+-------+-------" << std::endl;
 
-    auto printFunc = [&](TreeNode* node)
+    auto printFunc = [&](const TreeNode* node)
     {
         auto fillSpaceFunc = [&](size_t spacesAvailable, const std::string& str)
         {
@@ -177,7 +194,7 @@ void Tree::printTree(std::ostream& stream) const
         stream << std::endl;
     };
 
-    traverse(printFunc);
+    traverseConst(printFunc);
 }
 
 void Tree::printNode(TreeNode* node, std::ostream& stream)

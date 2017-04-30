@@ -84,11 +84,18 @@ void searchTree(Tree& tree)
 
     auto nodes = tree.search(name);
 
-    std::cout << "+ Fundstellen:" << std::endl;
-
-    for(size_t i = 0; i < nodes.size(); ++i)
+    if(nodes.size() == 0)
     {
-        Tree::printNode(nodes[i]);
+        std::cout << "+ Kein Datensatz gefunden!" << std::endl;
+    }
+    else
+    {
+        std::cout << "+ Fundstellen:" << std::endl;
+
+        for(size_t i = 0; i < nodes.size(); ++i)
+        {
+            Tree::printNode(nodes[i]);
+        }
     }
 }
 
@@ -177,8 +184,8 @@ int main(void)
 
     printIntro();
 
-    insertCSV(tree);
-    tree.printTree();
+//    insertCSV(tree);
+//    tree.printTree();
 
     while(true)
     {

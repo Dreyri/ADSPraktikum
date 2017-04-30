@@ -84,11 +84,14 @@ void Ringpuffer::print(std::ostream& ostream, RingNode* node) const
 
         do
         {
-            print(ostream, curNode); //OldAge: x, Descr: y, Data: z
-            ostream << "---------------------------" << std::endl;
+            if(curNode != nullptr)
+            {
+                print(ostream, curNode); //OldAge: x, Descr: y, Data: z
+                ostream << "---------------------------" << std::endl;
 
-            //increment to next node
-            curNode = curNode->getNext();
+                //increment to next node
+                curNode = curNode->getNext();
+            }
         }
         while(curNode != mAnchor); //do until back at start
     }
