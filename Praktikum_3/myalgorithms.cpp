@@ -1,5 +1,6 @@
 #include "myalgorithms.h"
 
+#include <omp.h>
 #include <cmath>
 
 namespace ADS {
@@ -82,54 +83,54 @@ void Merge(VecRefi a, int low, int pivot, int high)
     std::cout << "Merge(a, " << "low: " << low << ", pivot: " << pivot << ", high: " << high << ")" << std::endl;
 
     int i, j, k;
-        int n1 = pivot - low + 1;
-        int n2 =  high - pivot;
+    int n1 = pivot - low + 1;
+    int n2 =  high - pivot;
 
-        /* create temp arrays */
-        int L[n1], R[n2];
+    /* create temp arrays */
+    int L[n1], R[n2];
 
-        /* Copy data to temp arrays L[] and R[] */
-        for (i = 0; i < n1; i++)
-            L[i] = a[low + i];
-        for (j = 0; j < n2; j++)
-            R[j] = a[pivot + 1+ j];
+    /* Copy data to temp arrays L[] and R[] */
+    for (i = 0; i < n1; i++)
+        L[i] = a[low + i];
+    for (j = 0; j < n2; j++)
+        R[j] = a[pivot + 1+ j];
 
-        /* Merge the temp arrays back into arr[l..r]*/
-        i = 0; // Initial index of first subarray
-        j = 0; // Initial index of second subarray
-        k = low; // Initial index of merged subarray
-        while (i < n1 && j < n2)
-        {
-            if (L[i] <= R[j])
-            {
-                a[k] = L[i];
-                i++;
-            }
-            else
-            {
-                a[k] = R[j];
-                j++;
-            }
-            k++;
-        }
-
-        /* Copy the remaining elements of L[], if there
-           are any */
-        while (i < n1)
+    /* Merge the temp arrays back into arr[l..r]*/
+    i = 0; // Initial index of first subarray
+    j = 0; // Initial index of second subarray
+    k = low; // Initial index of merged subarray
+    while (i < n1 && j < n2)
+    {
+        if (L[i] <= R[j])
         {
             a[k] = L[i];
             i++;
-            k++;
         }
-
-        /* Copy the remaining elements of R[], if there
-           are any */
-        while (j < n2)
+        else
         {
             a[k] = R[j];
             j++;
-            k++;
         }
+        k++;
+    }
+
+    /* Copy the remaining elements of L[], if there
+           are any */
+    while (i < n1)
+    {
+        a[k] = L[i];
+        i++;
+        k++;
+    }
+
+    /* Copy the remaining elements of R[], if there
+           are any */
+    while (j < n2)
+    {
+        a[k] = R[j];
+        j++;
+        k++;
+    }
 }
 
 void MergeSort(VecRefi a, int low, int high)
@@ -221,13 +222,11 @@ void MatrixMul_ColMajor(VecRefd a, VecRefd b, VecRefd c, size_t n)
     size_t ldb = n;
     size_t ldc = n;
 
-    double s = 0.0;
-
     for(size_t i = 0; i<n; ++i)
     {
         for(size_t j = 0; j<n; ++j)
         {
-            s = 0.0;
+            double s = 0.0;
             for(size_t k = 0; k<n; ++k)
             {
                 s = s + a[i+k*lda] * b[k+j*ldb];
@@ -244,13 +243,16 @@ void OMP_MatrixMul_ColMajor(VecRefd a, VecRefd b, VecRefd c, size_t n)
     size_t ldb = n;
     size_t ldc = n;
 
-    double s = 0.0;
+    int num_procs = omp_get_num_procs();
+    omp_set_num_threads(num_procs);
 
+#pragma omp parallel for
     for(size_t i = 0; i<n; ++i)
     {
+#pragma omp parallel for
         for(size_t j = 0; j<n; ++j)
         {
-            s = 0.0;
+            double s = 0.0;
             for(size_t k = 0; k<n; ++k)
             {
                 s = s + a[i+k*lda] * b[k+j*ldb];
@@ -288,15 +290,18 @@ void OMP_MatrixMul_RowMajor(VecRefd a, VecRefd b, VecRefd c, size_t n)
 {
     size_t lda = n;
     size_t ldb = n;
-    size_t ldc = n;
+    size_t ldc = n;    
 
-    double s = 0.0;
+    int num_procs = omp_get_num_procs();
+    omp_set_num_threads(num_procs);
 
+#pragma omp parallel for
     for(size_t i = 0; i<n; ++i)
     {
+#pragma omp parallel for
         for(size_t j = 0; j<n; ++j)
         {
-            s = 0.0;
+            double s = 0.0;
             for(size_t k = 0; k<n; ++k)
             {
                 s += a[k+i*lda] * b[j+k*ldb];
