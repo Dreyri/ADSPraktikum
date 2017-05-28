@@ -284,13 +284,13 @@ double Graph::kruskal()
     std::vector<GraphNode::edge> mstEdges;
 
     //first: parent, second: rank
-    std::vector<std::pair<int, int>> subSet(_nodes.size());
+    std::vector<std::pair<int, int>> subSet(_nodes.size()+1);
 
     //define our function to find what set we're part of
     std::function<int(int)> findSet = [&](int key) -> int
     {
         if(subSet[key].first != key)
-            subSet[key].first = findSet(key);
+            subSet[key].first = findSet(subSet[key].first);
 
         return subSet[key].first;
     };
@@ -346,7 +346,7 @@ double Graph::kruskal()
     }
     //that duplicate prevention actually works, nice
 
-    //sort them from small to large
+    //sort them from small to large, yes this works all good :)
     std::sort(edges.begin(), edges.end(), [](auto& lhs, auto& rhs) -> bool
     {
         return lhs.second.value < rhs.second.value;
@@ -369,7 +369,7 @@ double Graph::kruskal()
         //cycle is created if u and v belong to the same set
         if(setu != setv)
         {
-            std::cout << u << " - " << v << std::endl;
+            //std::cout << u << " - " << v << std::endl;
             res += edges[i].second.value;
 
             //join the sets together

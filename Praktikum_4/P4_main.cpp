@@ -28,7 +28,9 @@ int main() {
 
     myGraph->init("graph1.txt");
 
-    std::cout << "Minimal spanning tree: " << myGraph->kruskal() << std::endl;;
+    std::cout << "Minimal spanning tree (krus): " << myGraph->kruskal() << std::endl;
+
+    std::cout << "Minimal spanning tree (prim): " << myGraph->prim(0) << std::endl;
 
     while(menuwahl != 0){
 
@@ -60,7 +62,12 @@ int main() {
             std::cin >> key;
 
             //This way:
-            //myGraph.depthSearchIter(key);
+            bool found = myGraph->depthSearchIter(key);
+
+            if(found)
+                std::cout << "key: " << key << ", was found using depthSearchIter" << std::endl;
+            else
+                std::cout << "key: " << key << ", was not found using depthSearchIter" << std::endl;
 
             //Or this:
             //myGraph.depthSearchRek(key);
@@ -76,19 +83,28 @@ int main() {
             //myGraph.breadthSearchIter(key);
 
             //Or this:
-            //myGraph.breadthSearchRek(key);
+            bool found = myGraph->breadthSearchRek(key);
+
+            if(found)
+                std::cout << "key: " << key << ", was found using breadthSearchRek" << std::endl;
+            else
+                std::cout << "key: " << key << ", was not found using breadthSearchRek" << std::endl;
         }
 
         //Prim
         if(menuwahl==4){
             std::cout << "Choose a startkey: " << std::endl;
             std::cin >> key;
+            std::cout << "Minimal spanning tree (prim,k=" << key << "): " << myGraph->prim(key) << std::endl;
+
             //myGraph.prim(key);
         }
 
         //Kruskal
         if(menuwahl==5){
             //myGraph.kruskal();
+            std::cout << "Minimal spanning tree (krus): " << myGraph->kruskal() << std::endl;
+
         }
 
         //Print function

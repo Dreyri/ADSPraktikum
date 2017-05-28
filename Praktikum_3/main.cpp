@@ -128,6 +128,7 @@ void testMatrixMult(const std::string& fileName, std::function<void(std::vector<
 void matrixMultTest()
 {
 
+    /*
     std::cout << "Mult col major" << std::endl;
     testMatrixMult("col.txt", MatrixMul_ColMajor);
 
@@ -139,6 +140,7 @@ void matrixMultTest()
 
     std::cout << "Mult row major OMP" << std::endl;
     testMatrixMult("rowomp.txt", OMP_MatrixMul_RowMajor);
+    */
 }
 
 int sorting(void)

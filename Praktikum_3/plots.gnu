@@ -2,7 +2,7 @@ reset
 set autoscale x
 set autoscale y
 set xlabel "n [-]"
-set ylabel "t [s]"
+set ylabel "t [ms]"
 set key top left
 
 plot \
