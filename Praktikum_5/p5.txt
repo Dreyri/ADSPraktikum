@@ -1,0 +1,50 @@
+1 Zweck
+
+Daten komprimieren ohne Datenverlust
+
+2
+
+Siehe Blatt Papier
+
+3
+
+Siehe Blatt Papier
+
+Warum unterscheiden?
+
+Mehrere korrekte Moeglichkeiten sind oefters moeglich beim waehlen der Kombinationen
+
+4 Einsparung
+
+abaac = 5 char = 40 bit
+encoded abaac = 6 bit => 34 bit gespart
+
+5
+
+Siehe Blatt Papier
+
+6 immer gleich?
+
+nein, das haengt davon ab wie der Baum aufgestellt wird
+
+7
+
+codebuch ist der Baum
+codewort ist die Bitsequenz fuer einen Charakter
+
+8 wo findet
+
+in den Bits angegeben durch den ersten 32 bits im File, dieses int gibt die laenge des Buches an.
+
+9 RGB?
+
+Natuerlich, ist genau so wie grauwert nur mit 3 verschiedenen Kanalen
+
+10 Was sehen
+
+nicht all zu viel Kontrast daher moeglicherweise eine gute Kompression moeglich
+
+11 Huffman vs others
+
+gute kompression & dekompressionszeiten, besser bei groesseren files da die Tabelle viel platz einnimmt.
+Vergleichbare einsparung bei text files wie andere Kompressionsalgorithmen
