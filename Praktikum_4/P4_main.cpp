@@ -65,9 +65,9 @@ int main() {
             bool found = myGraph->depthSearchIter(key);
 
             if(found)
-                std::cout << "key: " << key << ", was found using depthSearchIter" << std::endl;
+                std::cout << "key: " << key << ", covers all vertices" << std::endl;
             else
-                std::cout << "key: " << key << ", was not found using depthSearchIter" << std::endl;
+                std::cout << "key: " << key << ", does not cover all vertices" << std::endl;
 
             //Or this:
             //myGraph.depthSearchRek(key);
@@ -86,9 +86,9 @@ int main() {
             bool found = myGraph->breadthSearchRek(key);
 
             if(found)
-                std::cout << "key: " << key << ", was found using breadthSearchRek" << std::endl;
+                std::cout << "key: " << key << ", covers all vertices" << std::endl;
             else
-                std::cout << "key: " << key << ", was not found using breadthSearchRek" << std::endl;
+                std::cout << "key: " << key << ", does not cover all vertices" << std::endl;
         }
 
         //Prim

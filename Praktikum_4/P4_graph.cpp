@@ -189,7 +189,10 @@ void Graph::breadthSearchHelper(GraphNode* x)
     for(auto e : x->_edges)
     {
         if(!e.node->_visited)
+        {
+            std::cout << "visiting: " << getId(e.node) << std::endl;
             breadthSearchHelper(e.node);
+        }
     }
 }
 
@@ -361,7 +364,7 @@ double Graph::kruskal()
         int v = getId(edges[i].second.node);
 
         if(v == -1)
-            std::cerr << "something when wrong, couldn't find node key" << std::endl;
+            std::cerr << "something went wrong, couldn't find node key" << std::endl;
 
         int setu = findSet(u);
         int setv = findSet(v);
